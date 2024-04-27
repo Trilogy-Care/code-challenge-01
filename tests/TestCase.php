@@ -2,6 +2,7 @@
 
 namespace Tests;
 
+use App\Models\User;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
@@ -13,5 +14,14 @@ abstract class TestCase extends BaseTestCase
         parent::setUp();
 
         $this->artisan('migrate');
+    }
+
+    protected function actingAsAdmin(): static
+    {
+        $this->actingAs(User::factory()->create([
+            'email' => User::ADMIN_EMAIL,
+        ]));
+
+        return $this;
     }
 }

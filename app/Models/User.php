@@ -14,6 +14,8 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    const ADMIN_EMAIL = 'admin@trilogycare.com.au';
+
     /**
      * The attributes that are mass assignable.
      *
