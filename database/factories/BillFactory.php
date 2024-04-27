@@ -2,6 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\Bill;
+use App\Models\BillStage;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -31,5 +34,50 @@ class BillFactory extends Factory
             'on_hold_at' => fake()->date(),
             'bill_stage_id' => rand(0, 7),
         ];
+    }
+
+    public function submitted(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'approved_at' => null,
+            'on_hold_at' => null,
+            'bill_stage_id' => BillStage::factory()->label(BillStage::SUBMITTED),
+        ]);
+    }
+
+    public function approved(): static
+    {
+        return $this->state(fn () => [
+            'on_hold_at' => null,
+            'bill_stage_id' => BillStage::factory()->label(BillStage::APPROVED),
+        ]);
+    }
+
+    public function onHold(): static
+    {
+        return $this->state(fn () => [
+            'bill_stage_id' => BillStage::factory()->label(BillStage::ON_HOLD),
+        ]);
+    }
+
+    public function rejected(): static
+    {
+        return $this->state(fn () => [
+            'bill_stage_id' => BillStage::factory()->label(BillStage::REJECTED),
+        ]);
+    }
+
+    public function paid(): static
+    {
+        return $this->state(fn () => [
+            'bill_stage_id' => BillStage::factory()->label(BillStage::PAID),
+        ]);
+    }
+
+    public function assignedToUser(User $user = null): static
+    {
+        return $this->afterCreating(function (Bill $bill) use ($user) {
+            $bill->users()->attach($user ?? User::factory()->create());
+        });
     }
 }

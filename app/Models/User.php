@@ -45,8 +45,15 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    /*
+    |--------------------------------------------------------------------------
+    | Relationships
+    |--------------------------------------------------------------------------
+    */
+
     public function bills(): BelongsToMany
     {
-        return $this->belongsToMany(Bill::class);
+        return $this->belongsToMany(Bill::class)
+            ->withTimestamps();
     }
 }
