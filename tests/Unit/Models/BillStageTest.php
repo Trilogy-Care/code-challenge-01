@@ -18,9 +18,7 @@ class BillStageTest extends TestCase
 
     public function test_by_label_scope_query(): void
     {
-        BillStage::factory()->label(BillStage::SUBMITTED);
-
-        $result = BillStage::byLabel(BillStage::SUBMITTED)->first();
+        $result = BillStage::byLabel(BillStage::SUBMITTED)->firstOrFail();
 
         $this->assertNotNull($result);
 

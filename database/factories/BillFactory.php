@@ -41,36 +41,36 @@ class BillFactory extends Factory
         return $this->state(fn (array $attributes) => [
             'approved_at' => null,
             'on_hold_at' => null,
-            'bill_stage_id' => BillStage::factory()->label(BillStage::SUBMITTED),
+            'bill_stage_id' => BillStage::byLabel(BillStage::SUBMITTED)->firstOrFail()->id,
         ]);
     }
 
     public function approved(): static
     {
-        return $this->state(fn () => [
+        return $this->state(fn (array $attributes) => [
             'on_hold_at' => null,
-            'bill_stage_id' => BillStage::factory()->label(BillStage::APPROVED),
+            'bill_stage_id' => BillStage::byLabel(BillStage::APPROVED)->firstOrFail()->id,
         ]);
     }
 
     public function onHold(): static
     {
-        return $this->state(fn () => [
-            'bill_stage_id' => BillStage::factory()->label(BillStage::ON_HOLD),
+        return $this->state(fn (array $attributes) => [
+            'bill_stage_id' => BillStage::byLabel(BillStage::ON_HOLD)->firstOrFail()->id,
         ]);
     }
 
     public function rejected(): static
     {
-        return $this->state(fn () => [
-            'bill_stage_id' => BillStage::factory()->label(BillStage::REJECTED),
+        return $this->state(fn (array $attributes) => [
+            'bill_stage_id' => BillStage::byLabel(BillStage::REJECTED)->firstOrFail()->id,
         ]);
     }
 
     public function paid(): static
     {
-        return $this->state(fn () => [
-            'bill_stage_id' => BillStage::factory()->label(BillStage::PAID),
+        return $this->state(fn (array $attributes) => [
+            'bill_stage_id' => BillStage::byLabel(BillStage::PAID)->firstOrFail()->id,
         ]);
     }
 
