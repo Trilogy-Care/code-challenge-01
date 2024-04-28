@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Billing;
 use App\Http\Controllers\Controller;
 use App\Models\BillStage;
 use App\Services\BillingService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
@@ -17,7 +18,7 @@ class BillingSummaryController extends Controller
         $this->billingService = BillingService::new();
     }
 
-    public function index(Request $request)
+    public function index(Request $request): JsonResponse
     {
         Gate::authorize('view-billing-summary', $request->user());
 
