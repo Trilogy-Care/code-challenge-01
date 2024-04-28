@@ -23,6 +23,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::apiResource('billing-summary', BillingSummaryController::class)->only('index');
 
-Route::apiResource('billing', UserBillingController::class)->only('index');
-
-Route::apiResource('bills', BillController::class)->only('store');
+Route::apiResource('bills', BillController::class)->only('index', 'store');
