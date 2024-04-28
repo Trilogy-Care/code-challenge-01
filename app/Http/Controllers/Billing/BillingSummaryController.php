@@ -24,7 +24,7 @@ class BillingSummaryController extends Controller
 
         return response()->json([
             'total_submitted_bills' => $this->billingService->getBillsInStageQuery(BillStage::SUBMITTED)->count(),
-            'total_assigned_bills' => $this->billingService->getBillsInStageQuery(BillStage::APPROVED)->count(),
+            'total_approved_bills' => $this->billingService->getBillsInStageQuery(BillStage::APPROVED)->count(),
             'total_on_hold_bills' => $this->billingService->getBillsInStageQuery(BillStage::ON_HOLD)->count(),
         ]);
     }

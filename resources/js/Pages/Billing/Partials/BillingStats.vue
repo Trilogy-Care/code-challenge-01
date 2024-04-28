@@ -14,7 +14,7 @@
         <h2 class="font-semibold">Total number approved bills</h2>
         <tc-spinner v-if="loading" size="4" />
         <span v-else class="font-semibold text-gray-500">
-          {{ stats.total_on_hold_bills }}
+          {{ stats.total_approved_bills }}
         </span>
       </div>
     </tc-card>
@@ -23,7 +23,7 @@
         <h2 class="font-semibold">Total number on hold bills</h2>
         <tc-spinner v-if="loading" size="4" />
         <span v-else class="font-semibold text-gray-500">
-          {{ stats.total_submitted_bills }}
+          {{ stats.total_on_hold_bills }}
         </span>
       </div>
     </tc-card>

@@ -29,7 +29,7 @@ class BillingSummaryControllerTest extends TestCase
 
         $response->assertJson([
             'total_submitted_bills' => 5,
-            'total_assigned_bills' => 3,
+            'total_approved_bills' => 3,
             'total_on_hold_bills' => 2,
         ]);
     }
