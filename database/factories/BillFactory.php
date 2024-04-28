@@ -28,10 +28,10 @@ class BillFactory extends Factory
     {
         return [
             'bill_reference' => fake()->name(),
-            'bill_date' => fake()->date(),
-            'submitted_at' => fake()->date(),
-            'approved_at' => fake()->date(),
-            'on_hold_at' => fake()->date(),
+            'bill_date' => fake()->dateTime()->format('Y-m-d H:i:s'),
+            'submitted_at' => fake()->dateTime()->format('Y-m-d H:i:s'),
+            'approved_at' => fake()->dateTime()->format('Y-m-d H:i:s'),
+            'on_hold_at' => fake()->dateTime()->format('Y-m-d H:i:s'),
             'bill_stage_id' => rand(0, 7),
         ];
     }
