@@ -80,4 +80,11 @@ class BillFactory extends Factory
             $bill->users()->attach($user ?? User::factory()->create());
         });
     }
+
+    public function softDeleted(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'deleted_at' => now(),
+        ]);
+    }
 }

@@ -45,4 +45,31 @@ class UserBillingServiceTest extends TestCase
 
         $this->assertNotContains($maxedOutUser->id, $results->pluck('id'));
     }
+
+    public function test_get_user_billing_query_returns_correct_results(): void
+    {
+        $user1 = User::factory()->create(['name' => 'User 1']);
+        $user2 = User::factory()->create(['name' => 'User 2']);
+
+        Bill::factory()->count(3)->submitted()->assignedToUser($user1)->create();
+        Bill::factory()->count(2)->submitted()->assignedToUser($user2)->create();
+        Bill::factory()->count(1)->approved()->assignedToUser($user2)->create();
+
+        Bill::factory()->count(2)->submitted()->assignedToUser($user1)->softDeleted()->create();
+        Bill::factory()->count(1)->submitted()->assignedToUser($user2)->softDeleted()->create();
+
+        $results = $this->userBillingService->getUserBillingQuery()->get();
+
+        $this->assertCount(2, $results);
+
+        $this->assertEquals($user1->name, $results->first()->name);
+        $this->assertEquals(3, $results->first()->total_bills);
+        $this->assertEquals(3, $results->first()->total_submitted_bills);
+        $this->assertEquals(0, $results->first()->total_approved_bills);
+
+        $this->assertEquals($user2->name, $results->last()->name);
+        $this->assertEquals(3, $results->last()->total_bills);
+        $this->assertEquals(2, $results->last()->total_submitted_bills);
+        $this->assertEquals(1, $results->last()->total_approved_bills);
+    }
 }

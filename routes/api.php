@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Billing\BillController;
 use App\Http\Controllers\Billing\BillingSummaryController;
+use App\Http\Controllers\Billing\UserBillingController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,5 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::apiResource('billing-summary', BillingSummaryController::class)->only('index');
+
+Route::apiResource('billing', UserBillingController::class)->only('index');
 
 Route::apiResource('bills', BillController::class)->only('store');
