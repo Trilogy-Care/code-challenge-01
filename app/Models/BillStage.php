@@ -21,16 +21,6 @@ class BillStage extends Model
     const REJECTED = 'Rejected';
     const PAID = 'Paid';
 
-    const STAGES = [
-        self::DRAFT,
-        self::SUBMITTED,
-        self::APPROVED,
-        self::PAYING,
-        self::ON_HOLD,
-        self::REJECTED,
-        self::PAID,
-    ];
-
     protected $fillable = [
         'name', 'label', 'color_name', 'order',
     ];
