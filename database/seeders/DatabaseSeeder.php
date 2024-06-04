@@ -3,10 +3,10 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
-use App\Models\User;
 use App\Models\Bill;
+use App\Models\User;
 use Faker\Factory;
+use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -27,6 +27,6 @@ class DatabaseSeeder extends Seeder
 
         foreach (Bill::all() as $bill) {
             $bill->users()->attach([rand(1, 10)]);
-        };
+        }
     }
 }

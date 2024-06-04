@@ -4,8 +4,8 @@ use App\Models\BillStage;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\DB;
 
-return new class extends Migration {
-
+return new class extends Migration
+{
     private $billStages;
 
     public function __construct()

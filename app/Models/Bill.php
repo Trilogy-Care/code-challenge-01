@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Spatie\Activitylog\Models\Activity;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use App\Models\User;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Bill extends Model
 {
@@ -21,5 +21,17 @@ class Bill extends Model
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class);
+    }
+
+    public function stage(): BelongsTo
+    {
+        return $this->belongsTo(BillStage::class, 'bill_stage_id');
+    }
+
+    public function scopeByStageLabel(Builder $query, string $label): void
+    {
+        $query->whereHas('stage', function ($query) use ($label) {
+            $query->where('label', str($label)->title());
+        });
     }
 }

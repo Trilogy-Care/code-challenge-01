@@ -4,8 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Spatie\Activitylog\Models\Activity;
 
 class BillStage extends Model
 {
@@ -16,4 +16,8 @@ class BillStage extends Model
         'name', 'label', 'color_name', 'order',
     ];
 
+    public function bills(): HasMany
+    {
+        return $this->hasMany(Bill::class);
+    }
 }

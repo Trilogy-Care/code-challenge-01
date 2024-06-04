@@ -25,9 +25,6 @@ return new class extends Migration
             $table->index(['bill_stage_id']);
         });
 
-       
-        
-
     }
 
     /**
