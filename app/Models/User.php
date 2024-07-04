@@ -49,4 +49,10 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Bill::class);
     }
+
+    public function submittedBills(): BelongsToMany
+    {
+        return $this->belongsToMany(Bill::class)
+            ->where('bill_stage_id', Bill::STAGES['SUBMITTED']);
+    }
 }

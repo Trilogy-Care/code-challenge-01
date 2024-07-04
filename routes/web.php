@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BillController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -15,3 +16,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [HomeController::class, 'index'])->name('index');
+
+Route::post('/', [BillController::class, 'store'])->name('bills.store');
+
+Route::group([
+        'controller' => BillController::class, 
+        'prefix' => 'bills',
+    ], function () {
+        Route::get('/create', 'create')->name('bills.create');
+        Route::post('/', 'store')->name('bills.store');
+    }
+);
