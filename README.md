@@ -23,3 +23,28 @@ Create a PR or create a zip of the files and email: anthonyr@trilogycare.com.au
 
 https://github.com/Trilogy-Care/code-challenge-01
 
+### Running with SAIL
+`sail up -d`
+
+
+### Running Tests
+First you need to create a testing schema and a test user
+```bash
+CREATE SCHEMA testing;
+
+CREATE USER 'test_user'@'%' IDENTIFIED BY "testisbest";
+
+GRANT ALTER, CREATE, DELETE, DROP, INDEX, INSERT, SELECT, UPDATE, REFERENCES ON testing.* TO 'test_user'@'%';
+```
+
+Then you should run migrations on the testing env
+```bash
+./vendor/bin/sail artisan migrate --env testing
+```
+
+Now you can run Feature tests too
+```
+./vendor/bin/sail test
+```
+
+Note: DB_HOST must be networked depending on setup (Herd: 127.0.0.1, Artisan Serve: (Whatever ip your DB host is), Docker Compose/Sail: mysql (name of the db service))
