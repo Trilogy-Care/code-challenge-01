@@ -18,6 +18,13 @@ class Bill extends Model
         'bill_reference', 'bill_date', 'submitted_at', 'approved_at', 'on_hold_at', 'bill_stage_id',
     ];
 
+    protected $casts = [
+        'bill_date' => 'datetime',
+        'submitted_at' => 'datetime',
+        'approved_at' => 'datetime',
+        'on_hold_at' => 'datetime',
+    ];
+
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class);
