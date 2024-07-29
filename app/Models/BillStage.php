@@ -13,7 +13,7 @@ class BillStage extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'name', 'label', 'color_name', 'order',
+        'label', 'color_name', 'order',
     ];
 
 }
