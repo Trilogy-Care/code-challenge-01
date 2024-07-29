@@ -1,7 +1,7 @@
 {
     "name": "laravel/laravel",
     "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
+    "description": "Basic Admin Panel for managing Users and Bills",
     "keywords": ["laravel", "framework"],
     "license": "MIT",
     "require": {

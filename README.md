@@ -48,3 +48,10 @@ Now you can run Feature tests too
 ```
 
 Note: DB_HOST must be networked depending on setup (Herd: 127.0.0.1, Artisan Serve: (Whatever ip your DB host is), Docker Compose/Sail: mysql (name of the db service))
+
+### See Nate's Rationalle [here](./RATIONALLE.md)
+
+### TODO
+- Dashboard UI
+- Buttons to change billing stage "manually"
+- Auth
