@@ -5,9 +5,12 @@ namespace App\Console\Commands;
 use App\Models\Bill;
 use App\Models\BillStage;
 use App\Models\User;
+use App\Rules\UserBillLimit;
 use Illuminate\Console\Command;
 use Illuminate\Contracts\Console\PromptsForMissingInput;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 
 class AssignBillsToUser extends Command implements PromptsForMissingInput
 {
@@ -36,21 +39,26 @@ class AssignBillsToUser extends Command implements PromptsForMissingInput
         if (!$user) {
             $this->error('No user found with id '.$user_id);
         }
-        $submitted_stage_id = BillStage::where('name', 'Submitted')->first();
+        $submitted_stage = BillStage::where('label', 'Submitted')->first();
+        $available_bills = Bill::doesntHave('users')->where('bill_stage_id', $submitted_stage->id);
 
+        $assigned_count = 0;
+        foreach ($available_bills->get() as $available_bill) {
+            if ($user->bills()->count() >= 3) {
+                $this->error('Please process current bills, or assign to another user');
+                return 1;
+            }
+            $user->bills()->attach($available_bill);
+            $assigned_count++;
 
-        /**
-         * SELECT bills.* FROM bills
-         * JOIN laravel.bill_stages submitted_stage ON bills.bill_stage_id = submitted_stage.id AND submitted_stage.label = 'Submitted'
-         * WHERE bill_stage_id = submitted_stage.id
-         * AND bills.id NOT IN (SELECT id FROM bill_user);
-         */
+            // Custom validation rule a little overkill here
+//            try {
+                 // Repurpose user bill limit validation rule
+//                (new UserBillLimit())->validate('user_id', $user->id, fn () => $this->error('Too many bills assigned for this user'));
+//            } catch (ValidationException $exception) {
+//            }
+        }
 
-        $available_bills = Bill::query()
-            ->join(BillStage::class, 'bills.bill_stage_id', '=', 'bills_stage.id', 'inner', ['label' => 'Submitted'])
-            ->where('bills.bill_stage_id', 'bill_stage_id.id')
-            ->whereNotIn('bills.id', DB::table('bill_user', 'bu'));
-
-        $this->info($available_bills->count() . ' bills found to assign');
+        $this->info($assigned_count . ' Bills assigned to user');
     }
 }
